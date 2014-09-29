@@ -5,17 +5,20 @@ import csv
 
 class TubeMap:
     def __init__(self,file_name):
-        self.map = None
+        self.map = nx.Graph()
         self.file_name = file_name
 
     def get_stations(self):
         with open(self.file_name, newline="") as csvfile:
-            stations = csv.reader(csvfile, delimiter=" ", quotechar="|")
-            for row in csvfile:
-                print(row)
-        pass
+            stations = csv.reader(csvfile)
+            for line in stations:
+                my_graph = nx.Graph()
+                print(line[0],line[1])
+                my_graph.add_path(line[2:],data={"Line":line[0],"Edge Colour":line[1]})
+                print("The {0} line has been added.".format(line[0]))
 
     def generate_edge_colours(self,current_map):
+        
         return edge_colours
 
     def create_graph_plot(self,current_map):
@@ -33,3 +36,4 @@ class TubeMap:
 if __name__ == "__main__":
     new_map = TubeMap("tube.csv")
     new_map.get_stations()
+    print(new_map.map.get_edge_data("Notting Hill Gate", "Queensway"))
